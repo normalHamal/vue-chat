@@ -10,4 +10,4 @@
 * 实时发送消息(这个只是前端样式)
 
 ## demo
-![](http://i1.piimg.com/580615/ee9af32d5ad69ad0.png)
+![Markdown](http://i1.piimg.com/580615/ee9af32d5ad69ad0.png)
