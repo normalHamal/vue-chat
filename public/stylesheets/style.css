@@ -1,0 +1,354 @@
+    body {
+        color: #333;
+        font-family: \5FAE\8F6F\96C5\9ED1;
+    }
+    .layui-nav-child dd * , .info-group u-name, .msg-image-head-right {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 14px;
+    }
+    .layui-nav-child dd span {
+        margin-top: 4px;
+        max-width: 155px;
+    }
+    .layui-nav-child dd img {
+        position: absolute;
+        left: 15px;
+        top: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+    }
+    .info-group img {
+        float: left;
+        left: 15px;
+        top: 20px;
+        width: 64px;
+        height: 64px;
+        margin-left: 15px;
+        border-radius: 50%;
+    }
+    .layui-nav-child dd p {
+        display: block;
+        line-height: 18px;
+        font-size: 12px;
+        color: #999;
+    }
+    .layui-nav-child dd {
+        height: 42px;
+        padding: 5px 15px 5px 60px;
+        font-size: 0;
+        cursor: pointer;
+    }
+    .layui-nav-child dd:hover {
+        color: rgb(158, 198, 255);
+    }
+    .layui-nav-child dd p, .layui-nav-child dd span, .u-name, .info-group input, .conversation-group li span, .conversation-group li p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .layui-nav-child {
+        line-height: 19px;
+    }
+    .wc-chat {
+        position: fixed;
+        border: 1px solid #333;
+    }
+    .layui-nav-tree {
+        width: 270px;
+        padding: 0;
+    }
+    .layui-nav {
+        opacity: 0.8;
+    }
+    .friend-group, .conversation-group {
+        height: 361px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .info-group {
+        background-color: rgb(14, 55, 85);
+        height: 64px;
+        font-size: 14px;
+    }
+    .u-name {
+        margin-left: 5px;
+        max-width: 150px;
+        font-size: 16px;
+    }
+    .info-group .u-name, .info-group input , .title-move a {
+        color: rgb(255, 255, 255);
+    }
+    .title-move {
+        height: 20px;
+        padding-top: 3px;
+        padding-right: 10px;
+        text-align: right;
+    }
+    .title-move i:hover {
+        cursor: pointer;
+        opacity: 0.6;
+    }
+    .info-group input, .box-chat .title-chat p{
+        border: 0px;
+        position: relative;
+        display: block;
+        width: 60%;
+        left: 5px;
+        margin-top: 8px;
+        padding: 0 5px;
+        height: 26px;
+        line-height: 26px;
+        background: 0 0;
+        border-radius: 2px;
+    }
+    .info-group input:hover {
+        border: 1px solid #9cc370;
+    }
+    .info-group input:focus {
+        background-color: rgb(90,93,93);
+    }
+    .nav-group {
+        margin-top: 7px;
+        margin-bottom: 3px;
+        padding: 8px 5px;
+    }
+    .nav-group li:hover {
+        opacity: .6;
+    }
+    .nav-group li {
+        position: relative;
+        display: inline-block;          
+        width: 80px;
+        height: 26px;
+        text-align: center;
+        color: #666;
+        color: rgba(0,0,0,.6);
+        cursor: pointer;
+        list-style: none;
+    }
+    /*右键菜单*/
+    .desktop-menu { 
+        position: fixed; 
+        width: 150px; 
+        height: auto; 
+        background-color: rgb(255, 255, 255); 
+        border: #CCC 1px solid; 
+        display: none; 
+        border-radius: 5px; 
+        z-index: 20170120; 
+    }
+    .desktop-menu ul {
+        margin: 0px;
+        padding: 0px;
+    }
+    .desktop-menu ul li {
+        list-style: none;
+        line-height: 30px;
+        height: 30px;
+        margin: 3px 0px;
+        padding: 0px;
+        font-size: 13px;
+    }
+    .desktop-menu ul li:hover {
+        background-color: rgb(24,195,205);
+    }
+    .desktop-menu ul li a {
+        text-decoration: none;
+        display: block;
+        font-family: 微软雅黑;
+        height: 100%;
+        color: rgb(51, 51, 51);
+        padding: 0px 5px 0px 30px;
+        outline: none;
+    }
+    .title-chat {
+        height: 80px;
+    }
+    .editor-chat {
+        border-top: 1px solid #F1F1F1;
+    }
+    .editor-chat .textarea-chat {
+        
+    }
+    .editor-chat .bottom-chat {
+        position: relative;
+        height: 43px;
+    }
+    .editor-chat .send-chat {
+        position: absolute;
+        right: 15px;   
+        cursor: pointer;
+        top: 3px;  
+        height: 32px;
+        line-height: 32px;
+        font-size: 0;
+    }
+    .editor-chat .send-chat a {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 14px;
+        line-height: 32px;
+        margin-left: 5px;
+        padding: 0 20px;
+        background-color: rgb(14, 55, 85);
+        color: #fff;
+        border-radius: 3px;
+    } 
+    .content-chat, .editor-chat {
+        background-color: rgba(255,255,255,.9);
+    }
+    .main-chat .title-chat {
+        padding-left: 15px;
+    }
+    .main-chat .title-chat img {
+        float: left;
+        left: 15px;
+        top: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+    }
+    .dialog-box {
+        position: fixed;
+        border: 1px solid #D9D9D9;
+        border-color: rgba(0,0,0,.05);
+        background-repeat: no-repeat;
+        background-color: #F6F6F6;
+        color: #333;
+        font-family: \5FAE\8F6F\96C5\9ED1;
+    }
+    /*聊天窗口*/
+    .content-chat {
+        height: 262px;
+        padding: 15px 15px 5px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-darkshadow-color: #666;
+    }
+
+    .content-chat ul li {
+        position: relative;
+        font-size: 0;
+        margin-bottom: 10px;
+        padding-left: 60px;
+        min-height: 68px
+    }
+
+    .text-chat,.user-chat {
+        display: inline-block;
+        *display: inline;
+        *zoom:1;vertical-align: top;
+        font-size: 14px
+    }
+
+    .user-chat {
+        position: absolute;
+        left: 3px
+    }
+
+    .user-chat img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%
+    }
+
+    .user-chat cite {
+        position: absolute;
+        left: 60px;
+        top: -2px;
+        width: 500px;
+        line-height: 24px;
+        font-size: 12px;
+        white-space: nowrap;
+        color: #999;
+        text-align: left;
+        font-style: normal
+    }
+
+    .user-chat cite i {
+        padding-left: 15px;
+        font-style: normal
+    }
+
+    .text-chat {
+        position: relative;
+        line-height: 22px;
+        margin-top: 25px;
+        padding: 8px 15px;
+        background-color: #e2e2e2;
+        border-radius: 3px;
+        color: #333;
+        word-break: break-all;
+        max-width: 462px\9;
+    }
+
+    .text-chat:after {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 13px;
+        width: 0;
+        height: 0;
+        border-style: solid dashed dashed;
+        border-color: #e2e2e2 transparent transparent;
+        overflow: hidden;
+        border-width: 10px
+    }
+
+    .text-chat a {
+        color: #33DF83
+    }
+
+    .text-chat img {
+        max-width: 100%;
+        vertical-align: middle
+    }
+
+    .text-chat .layui-layim-file,.layui-layim-file {
+        display: block;
+        text-align: center
+    }
+
+    .text-chat .layui-layim-file {
+        color: #333
+    }
+    .content-chat ul .mine-chat {
+        text-align: right;
+        padding-left: 0;
+        padding-right: 60px
+    }
+
+    .mine-chat .user-chat {
+        left: auto;
+        right: 3px
+    }
+
+    .mine-chat .user-chat cite {
+        left: auto;
+        right: 60px;
+        text-align: right
+    }
+
+    .mine-chat .user-chat cite i {
+        padding-left: 0;
+        padding-right: 15px
+    }
+
+    .mine-chat .text-chat {
+        margin-left: 0;
+        text-align: left;
+        background-color: rgb(14, 55, 85);
+        color: #fff
+    }
+
+    .mine-chat .text-chat:after {
+        left: auto;
+        right: -10px;
+        border-top-color: rgb(14, 55, 85)
+    }
+
+    .mine-chat .text-chat a {
+        color: #fff
+    }

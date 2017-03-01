@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue的魅力</title>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="./bower_components/layui/layui.js"></script>
+	<link rel="stylesheet" type="text/css" href="./bower_components/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="./public/stylesheets/style.css" />
+	<style type="text/css">
+		.online {
+			color: #000000;
+		}
+	</style>
+</head>
+<body style="background-color: #333;height: 956px">
+		<!-- 整个wc-chat界面 -->
+		<!-- 此处用onselectstart让整个iframe无法选中，解决好友分组会在选中拉到上面时顺便选中u-name的问题 -->
+		<div class="wc-chat" style="z-index: 19980905; width: 270px; height: 500px; background-image: url('./public/images/tooopen_sy_160431234145.jpg');"  onselectstart="return false">
+			<!-- 可以拖动处 -->
+			<div class="title-move" style="cursor:move;">
+				<a href="javascript:;" class="func-click" data-type="logout"><i class="layui-icon">&#x1006;</i></a>
+			</div>
+			<div class="info-group">
+				<img src="./public/images/201709059416.jpg" />
+				<span class="u-name">顾轩芝</span>
+				<input name="signature" placeholder="编辑个性签名" value="对话框z-index莫名auto" id="signature">
+				<br>
+			</div>
+			<!-- 切换面板 -->
+			<ul class="nav-group">
+				<li class="">
+					<a href="javascript:;" class="func-click" data-type="showfriend">
+						<i class="layui-icon">&#xe612;</i>
+					</a>
+				</li>
+				<li class="">
+					<a href="javascript:;" class="func-click" data-type="showgroup">
+						<i class="layui-icon">&#xe613;</i>
+					</a>
+				</li>
+				<li class="">
+					<a href="javascript:;" class="func-click" data-type="showconversation">
+						<i class="layui-icon">&#xe611;</i>
+					</a>
+				</li>
+			</ul>
+
+				<!-- 联系人列表 -->
+				<div class="friend-group">
+					<ul class="layui-nav layui-nav-tree" lay-filter="fuc">
+					  <li class="layui-nav-item layui-nav-itemed">
+					    <a href="javascript:;">我的室友<em>( 4 )</em></a>
+					    <dl class="layui-nav-child">
+					      <dd class="online"><img src="./public/images/20170119121546.jpg"><span>罗素</span><p>话是拦路的虎，衣服是渗人的猫</p></dd>
+					      <dd><img src="./public/images/20170119121706.jpg"><span>Longway</span><p>Who rules this world?</p></dd>
+					      <dd><img src="./public/images/20170119121751.jpg"><span>﹏拖油瓶&#8242;</span><p>天才骄，废物恼，休书一纸少年傲！</p></dd>
+					      <dd><img src="./public/images/201709059416.jpg"><span>顾轩芝</span><p>                  相濡以沫，不如相忘于江湖</p></dd>
+					    </dl>
+					  </li>
+
+					  <li class="layui-nav-item" id="friend-list">
+					    <a href="javascript:;">朋友<em>( {{length}} )</em></a>
+					    <dl class="layui-nav-child">
+					    	<dd v-for="item in items"><!--  @oncontextmenu="ctmenu(event)" -->
+					    		<img :src="item.src" /><span>{{item.uname}}</span><p>{{item.signature}}</p>
+					    	</dd>
+					    </dl>
+					  </li>
+					  <script type="text/javascript">
+					  // 初始化必须尽快开始，不然后面有关节点事件的绑定就会绑不上
+					  	var listFriend = new Vue({
+			        		el: '#friend-list',
+			        		data: {
+			        			items: [
+			        				{src: './public/images/20170119152025.jpg',uname: 'Rossfen',signature: '螺蛳粉真好吃!!!'},
+			        				{src: './public/images/20170119152025.jpg',uname: 'Rossfen',signature: '螺蛳粉真好吃!!!'},
+			        				{src: './public/images/20170119152025.jpg',uname: 'Rossfen',signature: '螺蛳粉真好吃!!!'}
+			        			]
+			        		},
+			        		computed: {
+			        			//此处用计算属性就比用method好，此处应有缓存所以计算属性会立即返回之前的计算结果，而不必再次执行函数
+			        			//而用method就会没渲染一次就执行一次函数
+			        			length: function() {
+			        				return this.items.length;
+			        			}
+			        		}
+			        	})
+					  </script>
+					</ul>
+				</div>
+				<!-- 会话列表 -->
+				<div class="conversation-group" style="display: none;">
+					<ul class="layui-nav layui-nav-tree" lay-filter="fuc">
+						<li class="layui-nav-item layui-nav-itemed">
+							<dl class="layui-nav-child">
+								<dd class="func-click" data-type="openconversation">
+									<img src="./public/images/20170119121546.jpg">
+									<span>罗素</span>
+									<span style="font-size: 12px;line-height: 10px;float: right;">23:48</span>
+									<p>你刚才说什么？</p>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+		</div>
+		<!-- 聊天窗口 -->
+		<div class="dialog-box" id="dialogBox" style="z-index: 19891014; width: 600px; height: 574px; top: 42.5px; left: 13.5px; min-width: 500px; min-height: 420px; background-image: url('http://webos.90zs.net/themes/layui/css/modules/layim/skin/3.jpg'); display: none;">
+			<!-- 可以拖动处 -->
+			<div class="title-move" style="cursor:move;">
+				<a href="javascript:;" class="func-click" data-type="close"><i class="layui-icon">&#x1006;</i></a>
+			</div>
+			<div class="main-chat">
+				<div class="box-chat">
+					<div class="title-chat">
+						<img :src="src" />
+						<span class="u-name">{{ uname }}</span>
+						<p>{{ signature }}</p>
+						<br>
+					</div>
+					<div class="content-chat">
+						<ul>
+							<li v-for="record in records" v-bind:class="{'mine-chat':record.isMine}">
+								<div class="user-chat">
+									<img :src="record.src">
+									<cite v-if="record.isMine"><i>{{record.time}}</i>{{record.sender}}</cite>
+									<cite v-else>{{record.sender}}<i>{{record.time}}</i></cite>
+								</div>
+								<div class="text-chat" v-html="record.content">{{record.content}}</div>
+							</li>
+						</ul>
+					</div>
+
+					<div class="editor-chat">
+						<div class="textarea-chat">
+							<textarea class="layui-textarea" id="msgfor-send" style="display: none">  
+							  
+							</textarea>
+						</div>
+						<div class="bottom-chat">
+							<div class="send-chat">
+								<a href="javascript:;" class="func-click" data-type="close">关闭</a>
+								<a href="javascript:;" class="btn-send" @click="send">发送</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--右键菜单-->
+    	<div class="desktop-menu">  
+            <ul>  
+                <li><a href="javascript:;" class="func-click" data-type="sendmsg">发送消息</a></li> 
+                <li><a href="javascript:;" class="func-click" data-type="showdata">查看资料</a></li>  
+                <li><a href="javascript:;" class="func-click" data-type="delfriend">删除好友</a></li>   
+            </ul>  
+        </div>
+        <script src="./public/javascripts/date.js"></script>
+        <script>
+			var layedit,
+				index;
+			layui.use('layedit', function(){
+				layedit = layui.layedit;
+				//初始化发送文本框
+				index = layedit.build('msgfor-send', {
+				    tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right', 'image']
+				    ,height: 100
+				  })
+			});
+
+	        var dialogBox = new Vue({
+	        	el: '#dialogBox',
+	        	data: {
+	        		src: '',
+	        		uname: '',
+	        		signature: '',
+	        		records: [
+	        			{isMine: true,src: './public/images/201709059416.jpg',time: '2017-1-28 10:57:',sender: '顾轩芝',content: '新年快乐!!!'},
+	        			{isMine: false,src: './public/images/20170119121546.jpg',time: '2017-1-28 10:58',sender: '罗素',content: '你刚才说什么？'}
+	        		]
+	        	},
+				methods: {
+					send: function () {						 
+							var text = layedit.getContent(index)
+							console.log(text);
+					        if (text.length > 0) {
+					        	var record = new Object();
+					        	record.isMine = true;
+					        	record.src = './public/images/201709059416.jpg';
+					        	record.time = new Date().Format("yyyy-MM-dd HH:mm");
+					        	record.sender = '顾轩芝';
+					        	record.content = text;
+					            this.records.push(record);
+					            index = layedit.build('msgfor-send', {
+								    tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right', 'image']
+								    ,height: 100
+								  })
+					            //控制div层的滚动条始终显示在最底部
+					            $('.content-chat').scrollTop(9999999);
+					        }
+					        layui.use('layer', function(){
+					        	var layer = layui.layer;
+					        	layer.msg('已发送');
+							});			
+					}
+		        }
+		    });
+
+        	!function() {
+	        	var clickDom = null;//右键点击dom对象 类型:dd
+		        var p = {
+		        	hidemenu: function() {
+		        		$(".desktop-menu").hide()
+		        	},
+		        	showdialog: function(obj) {
+		        		var sessionObj = $(obj);
+		        		dialogBox.src = sessionObj.children('img').attr("src");
+		        		dialogBox.uname = sessionObj.children('span').eq(0).text();
+		        		dialogBox.signature = sessionObj.children('p').text();
+		        		$('#dialogBox').show()
+		        	},
+		        	sendmsg: function() {
+		        		p.showdialog(clickDom);
+		        		p.hidemenu()
+		        	},
+		        	openconversation: function() {
+		        		console.log(this);
+		        		p.showdialog(this)
+		        	},
+		        	showfriend: function() {
+		        		var conversation = $('.conversation-group'),
+		        			friend = $('.friend-group');
+		        		friend.show();
+		        		conversation.css('display','none')
+		        	},
+		        	showgroup: function() {
+		        		layui.use('layer', function(){
+		        		  var layer = layui.layer;
+		        		//示范一个公告层
+					      layer.open({
+					        type: 1
+					        ,title: false //不显示标题栏
+					        ,closeBtn: false
+					        ,area: '300px;'
+					        ,shade: 0.8
+					        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					        ,btn: ['去看看', '没兴趣']
+					        ,moveType: 1 //拖拽模式，0或者1
+					        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">你知道吗？亲！<br><br>这个页面只是一个演示<br><br>实际的结合服务端node的demo也有哦<br><br>欢迎star ^_^</div>'
+					        ,success: function(layero){
+					          var btn = layero.find('.layui-layer-btn');
+					          btn.css('text-align', 'center');
+					          btn.find('.layui-layer-btn0').on('click', function() {
+					          	//iframe层
+								layer.open({
+								  type: 2,
+								  title: 'wc-chat',
+								  shadeClose: true,
+								  shade: 0.8,
+								  area: ['380px', '90%'],
+								  content: 'https://www.xuanyizhishi.cn' //iframe的url
+								}); 
+					          })
+					        }
+					      });
+					  })
+		        	},
+		        	showconversation: function() {
+		        		var conversation = $('.conversation-group'),
+		        			friend = $('.friend-group');
+		        		conversation.show();
+		        		friend.css('display','none')
+		        	},
+		        	showdata: function() {
+		        		p.hidemenu()
+		        	},
+		        	delfriend: function() {
+		        		p.hidemenu()
+		        	},
+		        	close: function() {
+		        		$('#dialogBox').hide()
+		        	},
+		        	logout: function() {
+
+		        	},
+		        	init: function() {
+		        		//阻止浏览器鼠标右键单击事件
+						$(document).contextmenu(function() {
+			                return false
+			            });
+			            //绑定右键菜单并处理显示的位置
+			            $(".friend-group .layui-nav-child dd").each(function() {
+			            	$(this).on("contextmenu", function(a) {
+				                var x = a.clientX
+				                  , y = a.clientY
+				                  , desktopmenu = $(".desktop-menu");
+				                var b = document.body.clientWidth || window.screen.availWidth
+				                  , height = document.body.clientHeight || window.screen.availHeight;
+				                x = (x + desktopmenu.width()) >= b ? b - desktopmenu.width() - 15 : x;
+				                y = (y + desktopmenu.height()) >= height - 40 ? height - desktopmenu.height() - 15 : y;
+				                //考虑浏览器兼容性        
+								var t = a.srcElement || a.target;
+								//js中处处体现编码能力高低，还是要好好看，好好学
+								clickDom = t.tagName == 'DD' ?  t:t.parentNode;
+								$(clickDom).click();
+								 desktopmenu.css({
+				                    "top": y,
+				                    "left": x
+				                }).show()
+				            });
+			            });
+			            //当点击其它处时隐藏右键菜单
+			            $('.wc-chat').on('click', function() {
+			            	$(".desktop-menu").hide()
+			            });
+			            //监听enter事件
+			            $(document).keyup(function(event){
+						  if(event.keyCode ==13){						 
+						    //个性签名失去焦点就提交
+						    if(document.activeElement === document.getElementById('signature')){
+						    	$('#signature').trigger('blur')
+						    }
+						  }
+						});
+		        	}
+		        };		  
+		        p.init();
+		        $('body').on('click', '.func-click', function() {
+			        var a = $(this)
+			          , type = a.data('type');
+			        p[type] ? p[type].call(this, a) : ''
+			    })
+        	}()
+        
+        </script>
+	<script src="./public/javascripts/drag.js"></script>
+	<script type="text/javascript">
+		layui.use('element', function() {
+			var layer = layui.layer,
+			   element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
+			  //监听导航点击
+			  element.on('nav(fuc)', function(elem) {
+			  	//监听点击后的回调
+			  });
+		});
+
+		$(document).ready(function() {
+			$(window).resize()
+		});
+
+		$(window).resize(function() {
+			var wcChat = $('.wc-chat'),
+				dialogBox = $('.dialog-box');
+
+			wcChat.dragging({
+				move : 'both',
+				randomPosition : false,
+				position: {
+					x: [document.body.clientWidth - wcChat.css('width').slice(0,-2), 'px'].join(''),
+					y: '10px'
+				},
+				hander:'.title-move',
+				width: document.body.clientWidth || window.screen.availWidth,
+				height: document.body.clientHeight || window.screen.availHeight,
+				zIndex: wcChat.css('z-index')
+			});	
+
+			dialogBox.dragging({
+				move : 'both',
+				randomPosition : false,
+				position: {
+					x: [(document.body.clientWidth- dialogBox.css('width').slice(0,-2)) / 2, 'px'].join(''),
+					y: [(document.body.availHeight- dialogBox.css('height').slice(0,-2)) / 2, 'px'].join('')
+				},
+				hander:'.title-move',
+				width: document.body.clientWidth || window.screen.availWidth,
+				height: document.body.clientHeight || window.screen.availHeight,
+				zIndex: dialogBox.css('z-index')
+			});	
+		});
+	</script>
+</body>
+</html>
